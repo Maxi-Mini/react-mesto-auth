@@ -1,0 +1,39 @@
+@keyframes open-one {
+    from {
+      transform: translateY(0) rotate(0) scaleX(1);
+    }
+    to {
+      transform: translateY(8px) rotate(135deg) scaleX(1.3);
+    }
+  }
+  
+  @keyframes open-two {
+    from {
+      transform: scaleX(1);
+    }
+    to {
+      transform: scaleX(0);
+    }
+  }
+  
+  @keyframes open-three {
+    from {
+      transform: translateY(0) rotate(0) scaleX(1);
+    }
+    to {
+      transform: translateY(-8px) rotate(-135deg) scaleX(1.3);
+    }
+  }
+  
+  
+  .header__menu_type_opened:before {
+    animation: open-one ease 0.5s forwards;
+  }
+  
+  .header__menu_type_opened span {
+    animation: open-two ease 0.5s forwards;
+  }
+  
+  .header__menu_type_opened:after {
+    animation: open-three ease 0.5s forwards;
+  }

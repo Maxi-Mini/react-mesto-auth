@@ -1,0 +1,38 @@
+@keyframes close-one {
+    from {
+      transform: translateY(8px) rotate(135deg) scaleX(1.3);
+    }
+    to {
+      transform: translateY(0) rotate(0) scaleX(1);
+    }
+  }
+  
+  @keyframes close-two {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  
+  @keyframes close-three {
+    from {
+      transform: translateY(-8px) rotate(-135deg) scaleX(1.3);
+    }
+    to {
+      transform: translateY(0) rotate(0) scaleX(1);
+    }
+  }
+  
+  .header__menu_type_closed:before {
+    animation: close-one ease 0.5s forwards;
+  }
+  
+  .header__menu_type_closed span {
+    animation: close-two ease 0.5s forwards;
+  }
+  
+  .header__menu_type_closed:after {
+    animation: close-three ease 0.5s forwards;
+  }

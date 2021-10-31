@@ -1,0 +1,22 @@
+.popup__container_type_input {
+    position: relative;
+    background-color: #fff;
+    /* width: 430px; */
+    /* height: 330px; */
+    border-radius: 10px;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    max-width: 430px;
+    min-width: 282px;
+    padding: 34px 36px 36px;
+    box-sizing: border-box;
+    width: calc(100% - 38px);
+}
+
+@media screen and (max-width: 767px) {
+    .popup__container_type_input {
+        max-width: 282px;
+        max-height: 322px;
+    }
+}

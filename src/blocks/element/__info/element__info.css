@@ -1,0 +1,11 @@
+.element__info {
+    align-items: center;
+    background-color: #fff;
+    border-radius: 0 0 10px 10px;
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    /* justify-content: space-between; */
+    padding: 0 16px 0 20px;
+    box-sizing: border-box;
+    min-height: 79px;
+}

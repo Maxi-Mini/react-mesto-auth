@@ -1,0 +1,13 @@
+.popup__container_type_siganture {
+  text-align: center;
+  align-items: center;
+  padding: 60px 36px 60px;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.15);
+  background: #fff;
+  width: calc(100% - 38px);
+  max-width: 420px;
+  min-width: 282px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
