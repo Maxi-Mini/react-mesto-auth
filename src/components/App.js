@@ -1,28 +1,20 @@
 import React, { useState, useEffect } from "react";
-import {
-  Route,
-  Switch,
-  Redirect,
-  useHistory,
-} from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import "../index.css";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-// import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
-import {Login} from "./Login";
-import {Register} from "./Register";
-// import {InfoToolTip} from "./InfoTooltip";
-import {ProtectedRoute} from "./ProtectedRoute";
+import { Login } from "./Login";
+import { Register } from "./Register";
+import { ProtectedRoute } from "./ProtectedRoute";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
-import * as auth from "../auth";
+import * as auth from "../utils/auth";
 import InfoToolTip from "./InfoTooltip";
-
 
 function App() {
   // card
@@ -71,11 +63,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
-  // const [infoToolTipData, setInfoToolTipData] = useState({
-  //   title: "",
-  //   icon: "",
-  // });
-  const [tooltipStatus, setTooltipStatus] = useState('');
+  const [tooltipStatus, setTooltipStatus] = useState("");
 
   const onEditProfile = () => {
     setIsEditProfilePopupOpen(true);
@@ -93,10 +81,6 @@ function App() {
     setSelectedCard({ title: "", link: "" });
     setIsInfoToolTipOpen(false);
   };
-  
-  // const handleInfoToolTip = () => {
-  //   setIsInfoToolTipOpen(true);
-  // };
 
   // selected
 
@@ -169,7 +153,6 @@ function App() {
         .catch((err) => console.log(err));
     }
   };
-  
 
   // sign
 
@@ -178,7 +161,7 @@ function App() {
   const [userData, setUserData] = useState({
     email: "",
   });
-  
+
   const history = useHistory();
 
   useEffect(() => {
@@ -187,7 +170,7 @@ function App() {
     }
   }, [history, loggedIn]);
 
-  const handleLogin = ({email, password}) => {
+  const handleLogin = ({ email, password }) => {
     auth
       .authorize(email, password)
       .then((res) => {
@@ -201,35 +184,25 @@ function App() {
       .catch((err) => console.log(err));
   };
 
-  const handleRegister = ({email, password}) => {
+  const handleRegister = ({ email, password }) => {
     auth
       .register(email, password)
       .then((res) => {
-        if (res.data._id)
-        {setIsDataSet(true);
-        history.push("/sign-in");
-        setTooltipStatus('success');
-        setIsInfoToolTipOpen(true);
-        // setInfoToolTipData({
-        //   icon: true,
-        //   title: "Вы успешно зарегистрировались!",
-        // });
-        // handleInfoToolTip();
+        if (res.data._id) {
+          setIsDataSet(true);
+          history.push("/sign-in");
+          setTooltipStatus("success");
         }
       })
       .catch((err) => {
         console.error(err);
         setIsDataSet(false);
-        setTooltipStatus('error');
+        setTooltipStatus("");
         setIsInfoToolTipOpen(true);
-        // setInfoToolTipData({
-        //   icon: false,
-        //   title: "Что-то пошло не так! Попробуйте ещё раз.",
-        // });
-        // handleInfoToolTip();
       })
       .finally(() => {
         setIsDataSet(false);
+        setIsInfoToolTipOpen(true);
       });
   };
 
@@ -239,17 +212,15 @@ function App() {
     setLoggedIn(false);
   };
 
-  
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
         <Header
-        loggedIn={loggedIn}
-        handleLogout={handleLogout}
-        email={userData.email}
+          loggedIn={loggedIn}
+          handleLogout={handleLogout}
+          email={userData.email}
         />
-        
+
         <Switch>
           <ProtectedRoute
             exact
@@ -297,8 +268,6 @@ function App() {
         <InfoToolTip
           isOpen={isInfoToolTipOpen}
           onClose={closeAllPopups}
-          // title={infoToolTipData.title}
-          // icon={infoToolTipData.icon}
           authStatus={tooltipStatus}
         />
       </div>
