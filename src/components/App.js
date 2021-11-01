@@ -13,7 +13,7 @@ import Footer from "./Footer";
 import ImagePopup from "./ImagePopup";
 import {Login} from "./Login";
 import {Register} from "./Register";
-import {InfoToolTip} from "./InfoTooltip";
+// import {InfoToolTip} from "./InfoTooltip";
 import {ProtectedRoute} from "./ProtectedRoute";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
@@ -21,6 +21,7 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import * as auth from "../auth";
+import InfoToolTip from "./InfoTooltip";
 
 
 function App() {
@@ -70,10 +71,11 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
-  const [infoToolTipData, setInfoToolTipData] = useState({
-    title: "",
-    icon: "",
-  });
+  // const [infoToolTipData, setInfoToolTipData] = useState({
+  //   title: "",
+  //   icon: "",
+  // });
+  const [tooltipStatus, setTooltipStatus] = useState('');
 
   const onEditProfile = () => {
     setIsEditProfilePopupOpen(true);
@@ -92,9 +94,9 @@ function App() {
     setIsInfoToolTipOpen(false);
   };
   
-  const handleInfoToolTip = () => {
-    setIsInfoToolTipOpen(true);
-  };
+  // const handleInfoToolTip = () => {
+  //   setIsInfoToolTipOpen(true);
+  // };
 
   // selected
 
@@ -203,20 +205,27 @@ function App() {
     auth
       .register(email, password)
       .then((res) => {
-        setIsDataSet(true);
+        if (res.data._id)
+        {setIsDataSet(true);
         history.push("/sign-in");
-        setInfoToolTipData({
-          icon: true,
-          title: "Вы успешно зарегистрировались!",
-        });
+        setTooltipStatus('success');
+        setIsInfoToolTipOpen(true);
+        // setInfoToolTipData({
+        //   icon: true,
+        //   title: "Вы успешно зарегистрировались!",
+        // });
         // handleInfoToolTip();
+        }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error(err);
         setIsDataSet(false);
-        setInfoToolTipData({
-          icon: false,
-          title: "Что-то пошло не так! Попробуйте ещё раз.",
-        });
+        setTooltipStatus('error');
+        setIsInfoToolTipOpen(true);
+        // setInfoToolTipData({
+        //   icon: false,
+        //   title: "Что-то пошло не так! Попробуйте ещё раз.",
+        // });
         // handleInfoToolTip();
       })
       .finally(() => {
@@ -288,8 +297,9 @@ function App() {
         <InfoToolTip
           isOpen={isInfoToolTipOpen}
           onClose={closeAllPopups}
-          title={infoToolTipData.title}
-          icon={infoToolTipData.icon}
+          // title={infoToolTipData.title}
+          // icon={infoToolTipData.icon}
+          authStatus={tooltipStatus}
         />
       </div>
     </CurrentUserContext.Provider>
